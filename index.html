@@ -697,12 +697,6 @@ function saveSalesValue() {
 
 // ===== Initialize =====
 (function init() {
-  if (WEB_APP_URL === 'https://script.google.com/macros/s/AKfycbwF-b64Bam5w_T1aqo2QflYvmxP9B8G43BLdhKG1F53FfiNkjHNBMwWydVKNV48Mpz_/exec') {
-    showToast('⚠️ لم يتم إعداد رابط Web App بعد', true);
-    showDayEmpty('يرجى إعداد رابط Web App في الكود أولاً');
-    return;
-  }
-  
   const today = new Date();
   dateInput.value = toISODate(today);
   dateInput.addEventListener('change', loadData);
