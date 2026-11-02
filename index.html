@@ -939,7 +939,7 @@ function renderChart(chartData) {
           padding: 12,
           titleFont: { family: 'Tajawal', size: 13, weight: '700' },
           bodyFont: { family: 'Tajawal', size: 13 },
-          callbacks: { label: (c) => ' ' + formatNumber(c.parsed) + ' ريال' }
+          callbacks: { label: (c) => String(formatNumber(c.parsed)) + 'ريال' }
         }
       },
       animation: { animateRotate: true, duration: 900 }
