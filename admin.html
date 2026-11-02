@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة المشرف | منصة المبيعات</title>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#4F46E5;--primary-light:#EEF2FF;--success:#10B981;--danger:#EF4444;--gray-50:#F9FAFB;--gray-100:#F3F4F6;--gray-200:#E5E7EB;--gray-500:#6B7280;--gray-700:#374151;--gray-900:#111827;--shadow-md:0 4px 12px rgba(0,0,0,0.08);--shadow-lg:0 10px 30px rgba(0,0,0,0.10);--radius:16px}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Tajawal,sans-serif;background:#F9FAFB;min-height:100vh;color:var(--gray-900);padding:20px;direction:rtl}
+.container{max-width:900px;margin:0 auto}
+.card{background:#fff;border-radius:var(--radius);padding:24px;margin-bottom:20px;box-shadow:var(--shadow-md);border:1px solid var(--gray-100)}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.header h1{font-size:22px;font-weight:800;color:var(--primary)}
+.login-box{max-width:400px;margin:100px auto;text-align:center}
+.input-group{margin-bottom:16px;text-align:right}
+.input-group label{display:block;font-size:13px;font-weight:700;color:var(--gray-700);margin-bottom:6px}
+.input-group input,.input-group select{width:100%;padding:12px;font-family:Tajawal,sans-serif;font-size:14px;border:2px solid var(--gray-200);border-radius:10px;background:var(--gray-50)}
+.input-group input:focus,.input-group select:focus{outline:none;border-color:var(--primary);background:#fff}
+.btn{padding:12px 20px;font-family:Tajawal,sans-serif;font-size:14px;font-weight:700;color:#fff;background:var(--primary);border:none;border-radius:10px;cursor:pointer;transition:all .2s;width:100%}
+.btn:hover{background:#4338CA}
+.btn-danger{background:var(--danger)}
+.btn-danger:hover{background:#DC2626}
+.table{width:100%;border-collapse:collapse;margin-top:16px}
+.table th,.table td{padding:12px;text-align:right;border-bottom:1px solid var(--gray-200);font-size:13px}
+.table th{background:var(--gray-50);font-weight:700;color:var(--gray-700)}
+.table tr:hover{background:var(--gray-50)}
+.badge{display:inline-block;padding:4px 10px;border-radius:12px;font-size:11px;font-weight:700}
+.badge.active{background:#D1FAE5;color:#065F46}
+.badge.inactive{background:#FEE2E2;color:#991B1B}
+.section-title{font-size:16px;font-weight:800;margin-bottom:16px;color:var(--gray-700);border-bottom:2px solid var(--gray-100);padding-bottom:8px}
+.hidden{display:none}
+.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-100px);background:var(--success);color:#fff;padding:14px 24px;border-radius:12px;font-weight:700;font-size:14px;box-shadow:var(--shadow-lg);transition:transform .4s;z-index:9999}
+.toast.show{transform:translateX(-50%) translateY(0)}
+.toast.error{background:var(--danger)}
+</style>
+</head>
+<body>
+<div class="toast" id="toast"></div>
+
+<!-- شاشة تسجيل دخول المشرف -->
+<div id="loginBox" class="login-box">
+  <div class="card">
+    <h1 style="margin-bottom:20px;">🔐 لوحة المشرف</h1>
+    <div class="input-group">
+      <label>كلمة مرور المشرف</label>
+      <input type="password" id="adminPass" placeholder="أدخل كلمة المرور">
+    </div>
+    <button class="btn" onclick="loginAdmin()">دخول</button>
+  </div>
+</div>
+
+<!-- لوحة التحكم -->
+<div id="adminPanel" class="hidden">
+  <div class="header">
+    <h1>📊 لوحة إدارة المبيعات</h1>
+    <button class="btn btn-danger" style="width:auto;padding:8px 16px;" onclick="logoutAdmin()">خروج</button>
+  </div>
+
+  <!-- إضافة موظف -->
+  <div class="card">
+    <div class="section-title">➕ إضافة موظف جديد</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+      <div class="input-group">
+        <label>رقم الموظف</label>
+        <input type="text" id="newEmpId" placeholder="EMP002">
+      </div>
+      <div class="input-group">
+        <label>اسم الموظف</label>
+        <input type="text" id="newEmpName" placeholder="سارة علي">
+      </div>
+      <div class="input-group">
+        <label>كلمة المرور</label>
+        <input type="text" id="newEmpPass" placeholder="123456">
+      </div>
+    </div>
+    <button class="btn" onclick="addNewEmployee()" style="margin-top:8px;">إضافة الموظف</button>
+  </div>
+
+  <!-- قائمة الموظفين -->
+  <div class="card">
+    <div class="section-title">👥 قائمة الموظفين</div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>الرقم</th>
+          <th>الاسم</th>
+          <th>الحالة</th>
+          <th>تاريخ الإضافة</th>
+          <th>إجراءات</th>
+        </tr>
+      </thead>
+      <tbody id="employeesTable">
+        <tr><td colspan="5" style="text-align:center;">جاري التحميل...</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- تحديد الهدف الشهري -->
+  <div class="card">
+    <div class="section-title">🎯 تحديد الهدف الشهري</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+      <div class="input-group">
+        <label>الموظف</label>
+        <select id="targetEmpId"></select>
+      </div>
+      <div class="input-group">
+        <label>الشهر</label>
+        <input type="month" id="targetMonth">
+      </div>
+      <div class="input-group">
+        <label>الهدف (ريال)</label>
+        <input type="number" id="targetAmount" placeholder="30000">
+      </div>
+    </div>
+    <button class="btn" onclick="saveTarget()" style="margin-top:8px;">حفظ الهدف</button>
+  </div>
+</div>
+
+<script>
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw1ImIxS_FCBeHLxsIT9g3Gj8aprsfLteeeSRccYgV6_coK_RWggJLVUhd4FleL4EGU/exec";
+let adminPass = "";
+
+function $(id){return document.getElementById(id)}
+function showToast(msg,isError){var t=$("toast");t.textContent=msg;t.className="toast show"+(isError?" error":"");setTimeout(function(){t.classList.remove("show")},3500)}
+
+function loginAdmin(){
+  var pass = $("adminPass").value.trim();
+  if(!pass){showToast("أدخل كلمة المرور",true);return}
+  adminPass = pass;
+  $("loginBox").classList.add("hidden");
+  $("adminPanel").classList.remove("hidden");
+  loadEmployees();
+  // تعيين الشهر الحالي افتراضياً
+  var now = new Date();
+  $("targetMonth").value = now.getFullYear() + "-" + String(now.getMonth()+1).padStart(2,"0");
+}
+
+function logoutAdmin(){
+  adminPass = "";
+  $("adminPanel").classList.add("hidden");
+  $("loginBox").classList.remove("hidden");
+  $("adminPass").value = "";
+}
+
+function apiAdmin(action, extraParams){
+  var body = new URLSearchParams();
+  body.append("action", "admin");
+  body.append("adminPass", adminPass);
+  body.append("adminAction", action); // <--- هذا السطر قد يحتاج تعديل
+  for(var k in extraParams){body.append(k, extraParams[k])}
+  return fetch(WEB_APP_URL, {method:"POST", body:body}).then(function(r){return r.json()});
+}
+// تصحيح: دالة doPost في Code.gs تستقبل action كـ 'admin' وتحتاج تفصيل
+// سنعدل الطلب ليرسل action الأساسي كـ 'admin' والفرعي في معامل آخر
+function apiAdminCall(adminAction, extraParams){
+  var body = new URLSearchParams();
+  body.append("action", "admin");
+  body.append("adminPass", adminPass);
+  body.append("adminActionType", adminAction);
+  for(var k in extraParams){body.append(k, extraParams[k])}
+  return fetch(WEB_APP_URL, {method:"POST", body:body}).then(function(r){return r.json()});
+}
+
+function loadEmployees(){
+  apiAdminCall("getEmployees").then(function(res){
+    if(!res.success){showToast(res.error,true);return}
+    var html = "";
+    res.employees.forEach(function(emp){
+      var badgeClass = emp.status === "active" ? "active" : "inactive";
+      var badgeText = emp.status === "active" ? "نشط" : "موقوف";
+      html += "<tr>";
+      html += "<td>"+emp.id+"</td>";
+      html += "<td>"+emp.name+"</td>";
+      html += "<td><span class='badge "+badgeClass+"'>"+badgeText+"</span></td>";
+      html += "<td>"+emp.createdAt+"</td>";
+      html += "<td><button class='btn' style='width:auto;padding:4px 8px;font-size:11px;' onclick='toggleStatus(\""+emp.id+"\",\""+emp.status+"\")'>تغيير الحالة</button></td>";
+      html += "</tr>";
+    });
+    $("employeesTable").innerHTML = html;
+    
+    // ملء قائمة الموظفين في قسم الهدف
+    var select = $("targetEmpId");
+    select.innerHTML = "";
+    res.employees.forEach(function(emp){
+      var option = document.createElement("option");
+      option.value = emp.id;
+      option.textContent = emp.id + " - " + emp.name;
+      select.appendChild(option);
+    });
+  });
+}
+
+function addNewEmployee(){
+  var id = $("newEmpId").value.trim();
+  var name = $("newEmpName").value.trim();
+  var pass = $("newEmpPass").value.trim();
+  if(!id || !name || !pass){showToast("جميع الحقول مطلوبة",true);return}
+  
+  apiAdminCall("addEmployee", {empId:id, empName:name, empPassword:pass}).then(function(res){
+    if(res.success){
+      showToast("✅ "+res.message);
+      $("newEmpId").value = "";
+      $("newEmpName").value = "";
+      $("newEmpPass").value = "";
+      loadEmployees();
+    } else {
+      showToast(res.error,true);
+    }
+  });
+}
+
+function toggleStatus(id, currentStatus){
+  var newStatus = currentStatus === "active" ? "inactive" : "active";
+  apiAdminCall("updateEmployee", {empId:id, empStatus:newStatus, empName:""}).then(function(res){
+    // اسم الموظف مطلوب في الدالة، سنعدلها لتقبل الاسم الفارغ
+    if(res.success){showToast("تم تغيير الحالة");loadEmployees()}
+    else{showToast(res.error,true)}
+  });
+}
+
+function saveTarget(){
+  var empId = $("targetEmpId").value;
+  var month = $("targetMonth").value;
+  var amount = $("targetAmount").value;
+  if(!empId || !month || !amount){showToast("أكمل جميع الحقول",true);return}
+  
+  apiAdminCall("setTarget", {empId:empId, month:month, target:amount}).then(function(res){
+    if(res.success){showToast("✅ تم حفظ الهدف");$("targetAmount").value=""}
+    else{showToast(res.error,true)}
+  });
+}
+</script>
+</body>
+</html>
