@@ -210,17 +210,6 @@ body::before {
 <span class="data-label">✅ الحالة</span>
 <span class="status-badge pending" id="valStatus">-</span>
 </div>
-<div class="sales-input-section" id="salesInputSection">
-<div class="sales-input-header">
-<span class="sales-input-title">📝 تحديث المبيعات</span>
-<span class="sales-input-hint">أدخل مبيعاتك لهذا اليوم</span>
-</div>
-<div class="sales-input-group">
-<input type="number" id="inputSales" class="sales-input" placeholder="مثال: 1500" min="0" step="0.01" inputmode="decimal">
-<span class="currency-label">ريال</span>
-<button id="saveBtn" class="save-btn"><span class="btn-text">💾 حفظ</span></button>
-</div>
-</div>
 </div>
 </div>
 </div>
@@ -254,8 +243,7 @@ function showDashboard(){
 $("loginScreen").style.display="none";$("dashboard").classList.add("active");
 var initial=currentEmployee.name?currentEmployee.name.charAt(0):"؟";
 $("headerAvatar").textContent=initial;$("headerName").textContent="مرحباً "+(currentEmployee.name||"");$("headerSubtitle").textContent="رقم الموظف: "+currentEmployee.id;
-$("dateInput").value=toISODate(new Date());$("dateInput").onchange=loadData;$("saveBtn").onclick=saveSalesValue;
-$("inputSales").onkeypress=function(e){if(e.key==="Enter")saveSalesValue()};
+$("dateInput").value=toISODate(new Date());$("dateInput").onchange=loadData;
 loadData()
 }
 function showChartLoading(){$("chartLoading").style.display="flex";$("chartContent").style.display="none"}
@@ -290,7 +278,6 @@ showDayContent();$("rowTarget").style.display="flex";$("rowSales").style.display
 $("valTarget").textContent=formatNumber(dayData.actualTarget)+" ريال";
 $("valSales").textContent=dayData.hasData?formatNumber(dayData.sales)+" ريال":"لم تُدخل بعد";
 $("valSales").style.color=dayData.hasData?"var(--gray-900)":"var(--gray-500)";
-$("inputSales").value=dayData.hasData?dayData.sales:"";
 var remaining=dayData.remaining||0;var rowRemaining=$("rowRemaining");var valRemaining=$("valRemaining");
 if(remaining>0.01){valRemaining.textContent="-"+formatNumber(remaining)+" ريال (عجز)";valRemaining.className="data-value negative";rowRemaining.className="data-row danger"}
 else if(remaining<-0.01){valRemaining.textContent="+"+formatNumber(Math.abs(remaining))+" ريال (فائض)";valRemaining.className="data-value positive";rowRemaining.className="data-row success"}
@@ -299,17 +286,6 @@ var rowStatus=$("rowStatus");var valStatus=$("valStatus");
 if(dayData.status==="completed"){valStatus.textContent="✓ مكتمل";valStatus.className="status-badge completed";rowStatus.className="data-row success"}
 else if(dayData.status==="incomplete"){valStatus.textContent="✗ غير مكتمل";valStatus.className="status-badge incomplete";rowStatus.className="data-row danger"}
 else{valStatus.textContent="⏳ في انتظار الإدخال";valStatus.className="status-badge pending";rowStatus.className="data-row"}
-}
-function saveSalesValue(){
-if(isSaving)return;
-var amount=$("inputSales").value.trim();var dateValue=$("dateInput").value;
-if(!dateValue){showToast("الرجاء تحديد التاريخ",true);return}
-if(amount===""||isNaN(parseFloat(amount))||parseFloat(amount)<0){showToast("الرجاء إدخال قيمة صحيحة",true);$("inputSales").focus();return}
-isSaving=true;var btn=$("saveBtn");btn.disabled=true;var originalHTML=btn.innerHTML;btn.innerHTML='<span class="btn-spinner"></span> <span>جاري الحفظ...</span>';
-apiPost({action:"saveSales",token:currentToken,date:dateValue,amount:amount}).then(function(result){
-if(!result.success){if(result.error&&result.error.indexOf("الجلسة")>-1){showToast("انتهت الجلسة. سجّل الدخول من جديد.",true);setTimeout(performLogout,1500);return}showToast(result.error||"فشل الحفظ",true);return}
-showToast("✅ "+(result.message||"تم الحفظ بنجاح"));setTimeout(loadData,400)
-}).catch(function(err){console.error(err);showToast("فشل الاتصال بالسيرفر",true)}).finally(function(){isSaving=false;btn.disabled=false;btn.innerHTML=originalHTML})
 }
 document.addEventListener("DOMContentLoaded",function(){
 $("loginBtn").onclick=handleLogin;$("logoutBtn").onclick=handleLogout;
