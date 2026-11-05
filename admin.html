@@ -9,13 +9,14 @@
 :root{--primary:#4F46E5;--primary-light:#EEF2FF;--primary-dark:#4338CA;--success:#10B981;--success-light:#D1FAE5;--danger:#EF4444;--danger-light:#FEE2E2;--warning:#F59E0B;--warning-light:#FEF3C7;--gray-50:#F9FAFB;--gray-100:#F3F4F6;--gray-200:#E5E7EB;--gray-300:#D1D5DB;--gray-500:#6B7280;--gray-700:#374151;--gray-900:#111827;--shadow-md:0 4px 12px rgba(0,0,0,0.08);--shadow-lg:0 10px 30px rgba(0,0,0,0.10);--radius:16px}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Tajawal,sans-serif;background:linear-gradient(135deg,#F9FAFB 0%,#EEF2FF 100%);min-height:100vh;color:var(--gray-900);padding:20px;direction:rtl}
-.container{max-width:1100px;margin:0 auto}
+.container{max-width:1200px;margin:0 auto}
 .card{background:#fff;border-radius:var(--radius);padding:24px;margin-bottom:20px;box-shadow:var(--shadow-md);border:1px solid var(--gray-100)}
 .header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;flex-wrap:wrap;gap:12px}
 .header h1{font-size:22px;font-weight:800;color:var(--primary);display:flex;align-items:center;gap:8px}
 .logout-btn{padding:10px 16px;font-family:Tajawal,sans-serif;font-size:13px;font-weight:700;color:var(--gray-700);background:var(--gray-100);border:none;border-radius:10px;cursor:pointer;transition:all .2s}
 .logout-btn:hover{background:var(--danger-light);color:var(--danger)}
-.section-title{font-size:16px;font-weight:800;margin-bottom:16px;color:var(--gray-700);border-bottom:2px solid var(--gray-100);padding-bottom:8px;display:flex;align-items:center;gap:8px}
+.section-title{font-size:16px;font-weight:800;margin-bottom:16px;color:var(--gray-700);border-bottom:2px solid var(--gray-100);padding-bottom:8px;display:flex;align-items:center;gap:8px;justify-content:space-between}
+.section-title > span:first-child{display:flex;align-items:center;gap:8px}
 .input-group{margin-bottom:0;text-align:right}
 .input-group label{display:block;font-size:12px;font-weight:700;color:var(--gray-700);margin-bottom:6px}
 .input-group input,.input-group select{width:100%;padding:12px;font-family:Tajawal,sans-serif;font-size:14px;font-weight:600;border:2px solid var(--gray-200);border-radius:10px;background:var(--gray-50);color:var(--gray-900)}
@@ -31,6 +32,8 @@ body{font-family:Tajawal,sans-serif;background:linear-gradient(135deg,#F9FAFB 0%
 .btn-danger:hover:not(:disabled){background:#DC2626}
 .btn-success{background:var(--success)}
 .btn-success:hover:not(:disabled){background:#059669}
+.btn-warning{background:var(--warning)}
+.btn-warning:hover:not(:disabled){background:#D97706}
 .login-box{max-width:420px;margin:80px auto;text-align:center}
 .login-title{font-size:28px;font-weight:800;color:var(--primary);margin-bottom:8px}
 .login-subtitle{font-size:14px;color:var(--gray-500);margin-bottom:24px}
@@ -38,21 +41,33 @@ body{font-family:Tajawal,sans-serif;background:linear-gradient(135deg,#F9FAFB 0%
 .toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-100px);background:var(--success);color:#fff;padding:14px 24px;border-radius:12px;font-weight:700;font-size:14px;box-shadow:var(--shadow-lg);transition:transform .4s;z-index:9999;max-width:90%;text-align:center}
 .toast.show{transform:translateX(-50%) translateY(0)}
 .toast.error{background:var(--danger)}
+.toast.warning{background:var(--warning)}
 
-/* شريط التاريخ */
 .date-bar{display:flex;align-items:center;gap:12px;padding:16px;background:linear-gradient(135deg,#EEF2FF,#F5F3FF);border-radius:12px;margin-bottom:16px;flex-wrap:wrap}
 .date-bar label{font-weight:700;color:var(--gray-700);font-size:14px}
 .date-bar input{padding:10px 14px;font-family:Tajawal,sans-serif;font-size:16px;font-weight:700;border:2px solid var(--gray-200);border-radius:10px;background:#fff;cursor:pointer}
 .date-bar input:focus{outline:none;border-color:var(--primary)}
 .date-bar .meta{font-size:12px;color:var(--gray-500);font-weight:600;margin-right:auto}
 
+.bulk-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
 /* جدول الكمبيوتر */
 .employees-table-wrap{overflow-x:auto;margin-top:16px;border-radius:12px;border:1px solid var(--gray-200)}
-.employees-table{width:100%;border-collapse:collapse;font-size:13px;min-width:900px}
+.employees-table{width:100%;border-collapse:collapse;font-size:13px;min-width:950px}
 .employees-table th{background:var(--gray-50);padding:14px 10px;text-align:right;font-weight:800;color:var(--gray-700);border-bottom:2px solid var(--gray-200);white-space:nowrap;font-size:12px}
-.employees-table td{padding:12px 10px;border-bottom:1px solid var(--gray-100);font-weight:600;color:var(--gray-900)}
+.employees-table td{padding:12px 10px;border-bottom:1px solid var(--gray-100);font-weight:600;color:var(--gray-900);vertical-align:middle}
 .employees-table tr:hover{background:var(--gray-50)}
 .employees-table tr:last-child td{border-bottom:none}
+
+/* حقل إدخال المبيعات في الجدول */
+.sales-input-cell{display:flex;gap:4px;align-items:center}
+.sales-input-cell input{width:80px;padding:6px 8px;font-family:Tajawal,sans-serif;font-size:13px;font-weight:700;border:2px solid var(--gray-200);border-radius:8px;background:#fff;text-align:center;color:var(--gray-900)}
+.sales-input-cell input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-light)}
+.sales-input-cell input.dirty{border-color:var(--warning);background:var(--warning-light)}
+.sales-input-cell input.saved{border-color:var(--success);background:var(--success-light)}
+.sales-input-cell .save-one-btn{padding:6px 8px;font-size:11px;font-weight:700;border:none;border-radius:6px;background:var(--primary);color:#fff;cursor:pointer;transition:all .2s}
+.sales-input-cell .save-one-btn:hover:not(:disabled){background:var(--primary-dark)}
+.sales-input-cell .save-one-btn:disabled{opacity:.4;cursor:not-allowed}
 
 /* بطاقات الجوال */
 .employees-cards{display:none;flex-direction:column;gap:12px;margin-top:16px}
@@ -64,14 +79,19 @@ body{font-family:Tajawal,sans-serif;background:linear-gradient(135deg,#F9FAFB 0%
 .emp-card-stat{background:#fff;padding:10px;border-radius:8px}
 .emp-card-stat .lbl{font-size:10px;color:var(--gray-500);font-weight:600;margin-bottom:4px}
 .emp-card-stat .val{font-size:15px;font-weight:800;color:var(--gray-900)}
+.emp-card-sales-input{display:flex;gap:6px;margin-bottom:12px}
+.emp-card-sales-input input{flex:1;padding:10px;font-family:Tajawal,sans-serif;font-size:16px;font-weight:800;border:2px solid var(--gray-200);border-radius:8px;background:#fff;text-align:center;color:var(--gray-900)}
+.emp-card-sales-input input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-light)}
+.emp-card-sales-input input.dirty{border-color:var(--warning);background:var(--warning-light)}
+.emp-card-sales-input input.saved{border-color:var(--success);background:var(--success-light)}
+.emp-card-sales-input button{padding:10px 14px;font-family:Tajawal,sans-serif;font-size:13px;font-weight:700;border:none;border-radius:8px;background:var(--primary);color:#fff;cursor:pointer}
+.emp-card-sales-input button:disabled{opacity:.4;cursor:not-allowed}
 .emp-card-actions{display:flex;gap:8px}
 
-/* شارات */
 .badge{display:inline-block;padding:4px 10px;border-radius:12px;font-size:11px;font-weight:800}
 .badge.active{background:var(--success-light);color:#065F46}
 .badge.inactive{background:var(--danger-light);color:#991B1B}
-.badge-target{background:var(--primary-light);color:var(--primary)}
-.progress-bar{width:80px;height:6px;background:var(--gray-200);border-radius:3px;overflow:hidden;display:inline-block;vertical-align:middle;margin-left:6px}
+.progress-bar{width:80px;height:6px;background:var(--gray-200);border-radius:3px;overflow:hidden;display:inline-block;vertical-align:middle;margin-right:6px}
 .progress-fill{height:100%;background:var(--success);border-radius:3px;transition:width .3s}
 .progress-fill.low{background:var(--danger)}
 .progress-fill.mid{background:var(--warning)}
@@ -89,6 +109,7 @@ body{font-family:Tajawal,sans-serif;background:linear-gradient(135deg,#F9FAFB 0%
   .date-bar input{font-size:14px;padding:8px 10px}
   .login-box{margin:40px auto}
   .login-title{font-size:22px}
+  .bulk-actions{width:100%}
 }
 </style>
 </head>
@@ -120,7 +141,7 @@ body{font-family:Tajawal,sans-serif;background:linear-gradient(135deg,#F9FAFB 0%
 
     <!-- إضافة موظف -->
     <div class="card">
-      <div class="section-title">➕ إضافة موظف جديد</div>
+      <div class="section-title"><span>➕ إضافة موظف جديد</span></div>
       <div class="grid-3">
         <div class="input-group">
           <label>رقم الموظف</label>
@@ -142,7 +163,12 @@ body{font-family:Tajawal,sans-serif;background:linear-gradient(135deg,#F9FAFB 0%
 
     <!-- قائمة الموظفين -->
     <div class="card">
-      <div class="section-title">👥 قائمة الموظفين</div>
+      <div class="section-title">
+        <span>👥 قائمة الموظفين والمبيعات</span>
+        <button class="btn btn-sm btn-warning" onclick="saveAllDirty()" id="saveAllBtn" style="display:none;">
+          💾 حفظ الكل
+        </button>
+      </div>
 
       <!-- شريط التاريخ -->
       <div class="date-bar">
@@ -180,7 +206,7 @@ body{font-family:Tajawal,sans-serif;background:linear-gradient(135deg,#F9FAFB 0%
 
     <!-- تحديد الهدف الشهري -->
     <div class="card">
-      <div class="section-title">🎯 تحديد الهدف الشهري</div>
+      <div class="section-title"><span>🎯 تحديد الهدف الشهري</span></div>
       <div class="grid-3">
         <div class="input-group">
           <label>الموظف</label>
@@ -206,13 +232,14 @@ body{font-family:Tajawal,sans-serif;background:linear-gradient(135deg,#F9FAFB 0%
 const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw1ImIxS_FCBeHLxsIT9g3Gj8aprsfLteeeSRccYgV6_coK_RWggJLVUhd4FleL4EGU/exec";
 let adminPass = "";
 let currentEmployees = [];
+let dirtySales = {}; // {empId: amount} — المبيعات المعدّلة التي لم تُحفظ بعد
 
 function $(id){return document.getElementById(id)}
 
-function showToast(msg, isError){
+function showToast(msg, isError, isWarning){
   var t = $("toast");
   t.textContent = msg;
-  t.className = "toast show" + (isError ? " error" : "");
+  t.className = "toast show" + (isError ? " error" : (isWarning ? " warning" : ""));
   setTimeout(function(){t.classList.remove("show")}, 3500);
 }
 
@@ -243,10 +270,8 @@ function loginAdmin(){
   $("loginBox").classList.add("hidden");
   $("adminPanel").classList.remove("hidden");
   
-  // تعيين التاريخ الحالي
   $("filterDate").value = toISODate(new Date());
   
-  // تعيين الشهر الحالي
   var now = new Date();
   $("targetMonth").value = now.getFullYear() + "-" + String(now.getMonth()+1).padStart(2,"0");
   
@@ -254,8 +279,12 @@ function loginAdmin(){
 }
 
 function logoutAdmin(){
+  if(Object.keys(dirtySales).length > 0){
+    if(!confirm("لديك مبيعات لم تُحفظ. هل تريد الخروج؟")) return;
+  }
   adminPass = "";
   currentEmployees = [];
+  dirtySales = {};
   $("adminPanel").classList.add("hidden");
   $("loginBox").classList.remove("hidden");
   $("adminPass").value = "";
@@ -278,21 +307,27 @@ function loadEmployees(){
   var dateVal = $("filterDate").value;
   if(!dateVal){dateVal = toISODate(new Date());}
   
-  // عرض "جاري التحميل"
+  // مسح المبيعات المعدّلة عند تغيير التاريخ
+  if(Object.keys(dirtySales).length > 0){
+    if(!confirm("تغيير التاريخ سيفقد المبيعات غير المحفوظة. هل تريد المتابعة؟")){
+      return;
+    }
+    dirtySales = {};
+  }
+  
   $("employeesTableBody").innerHTML = '<tr><td colspan="8" style="text-align:center;padding:24px;">جاري التحميل...</td></tr>';
   $("employeesCards").innerHTML = '<div style="text-align:center;padding:24px;color:var(--gray-500);">جاري التحميل...</div>';
+  $("saveAllBtn").style.display = "none";
   
   apiAdminCall("getEmployees", {date: dateVal}).then(function(res){
     if(!res.success){
       showToast(res.error || "فشل التحميل", true);
       $("employeesTableBody").innerHTML = '<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--danger);">' + (res.error || "خطأ") + '</td></tr>';
-      $("employeesCards").innerHTML = '<div style="text-align:center;padding:24px;color:var(--danger);">' + (res.error || "خطأ") + '</div>';
       return;
     }
     
     currentEmployees = res.employees;
     
-    // تحديث شريط التاريخ
     if(res.monthKey){
       $("dateMeta").textContent = "الشهر: " + formatMonthKey(res.monthKey);
     }
@@ -303,12 +338,11 @@ function loadEmployees(){
     console.error(err);
     showToast("فشل الاتصال بالسيرفر", true);
     $("employeesTableBody").innerHTML = '<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--danger);">فشل الاتصال بالسيرفر</td></tr>';
-    $("employeesCards").innerHTML = '<div style="text-align:center;padding:24px;color:var(--danger);">فشل الاتصال بالسيرفر</div>';
   });
 }
 
 function renderEmployees(employees){
-  // ============ الجدول ============
+  // ============ الجدول (كمبيوتر) ============
   var tableHtml = "";
   
   if(employees.length === 0){
@@ -320,12 +354,23 @@ function renderEmployees(employees){
       var percentColor = emp.percentage >= 100 ? "success" : (emp.percentage >= 50 ? "mid" : "low");
       var percentWidth = Math.min(100, emp.percentage);
       
-      var daySalesDisplay = emp.hasDaySales ? formatNumber(emp.daySales) : '<span style="color:var(--gray-300);">—</span>';
+      var salesValue = emp.hasDaySales ? emp.sales : "";
+      var placeholder = emp.hasDaySales ? "" : "—";
       
       tableHtml += "<tr>";
       tableHtml += "<td>" + emp.id + "</td>";
       tableHtml += "<td><strong>" + emp.name + "</strong></td>";
-      tableHtml += "<td>" + daySalesDisplay + "</td>";
+      tableHtml += "<td>";
+      tableHtml += '<div class="sales-input-cell">';
+      tableHtml += '<input type="number" min="0" step="0.01" inputmode="decimal" ';
+      tableHtml += 'data-empid="' + emp.id + '" ';
+      tableHtml += 'value="' + (salesValue === 0 && !emp.hasDaySales ? "" : salesValue) + '" ';
+      tableHtml += 'placeholder="—" ';
+      tableHtml += 'oninput="onSalesInputChange(this)" ';
+      tableHtml += 'onkeypress="if(event.key===\'Enter\') saveSingleSales(\'' + emp.id + '\')">';
+      tableHtml += '<button class="save-one-btn" data-savebtn="' + emp.id + '" onclick="saveSingleSales(\'' + emp.id + '\')" disabled>💾</button>';
+      tableHtml += '</div>';
+      tableHtml += "</td>";
       tableHtml += "<td><strong>" + formatNumber(emp.monthSales) + "</strong></td>";
       tableHtml += "<td>" + (emp.monthlyTarget > 0 ? formatNumber(emp.monthlyTarget) : '<span style="color:var(--gray-300);">—</span>') + "</td>";
       tableHtml += "<td>";
@@ -357,6 +402,7 @@ function renderEmployees(employees){
       var badgeText = emp.status === "active" ? "نشط" : "موقوف";
       var percentColor = emp.percentage >= 100 ? "success" : (emp.percentage >= 50 ? "mid" : "low");
       var percentWidth = Math.min(100, emp.percentage);
+      var salesValue = emp.hasDaySales ? emp.sales : "";
       
       cardsHtml += '<div class="emp-card">';
       cardsHtml += '<div class="emp-card-header">';
@@ -365,15 +411,24 @@ function renderEmployees(employees){
       cardsHtml += '</div>';
       
       cardsHtml += '<div class="emp-card-stats">';
-      cardsHtml += '<div class="emp-card-stat"><div class="lbl">مبيعات اليوم</div><div class="val">' + (emp.hasDaySales ? formatNumber(emp.daySales) : '—') + '</div></div>';
       cardsHtml += '<div class="emp-card-stat"><div class="lbl">إجمالي الشهر</div><div class="val">' + formatNumber(emp.monthSales) + '</div></div>';
       cardsHtml += '<div class="emp-card-stat"><div class="lbl">الهدف الشهري</div><div class="val">' + (emp.monthlyTarget > 0 ? formatNumber(emp.monthlyTarget) : '—') + '</div></div>';
-      cardsHtml += '<div class="emp-card-stat"><div class="lbl">الإنجاز</div><div class="val">' + (emp.monthlyTarget > 0 ? emp.percentage + '%' : '—') + '</div></div>';
       cardsHtml += '</div>';
       
       if(emp.monthlyTarget > 0){
+        cardsHtml += '<div style="font-size:11px;color:var(--gray-500);font-weight:700;margin-bottom:6px;">الإنجاز: ' + emp.percentage + '%</div>';
         cardsHtml += '<div class="progress-bar" style="width:100%;margin-bottom:12px;"><div class="progress-fill ' + percentColor + '" style="width:' + percentWidth + '%"></div></div>';
       }
+      
+      cardsHtml += '<div style="font-size:11px;color:var(--gray-500);font-weight:700;margin-bottom:6px;">مبيعات اليوم:</div>';
+      cardsHtml += '<div class="emp-card-sales-input">';
+      cardsHtml += '<input type="number" min="0" step="0.01" inputmode="decimal" ';
+      cardsHtml += 'data-empid="' + emp.id + '" ';
+      cardsHtml += 'value="' + (salesValue === 0 && !emp.hasDaySales ? "" : salesValue) + '" ';
+      cardsHtml += 'placeholder="—" ';
+      cardsHtml += 'oninput="onSalesInputChange(this)">';
+      cardsHtml += '<button data-savebtn="' + emp.id + '" onclick="saveSingleSales(\'' + emp.id + '\')" disabled>💾</button>';
+      cardsHtml += '</div>';
       
       cardsHtml += '<div class="emp-card-actions">';
       cardsHtml += "<button class='btn btn-sm " + (emp.status === "active" ? "btn-danger" : "btn-success") + "' onclick='toggleStatus(\"" + emp.id + "\",\"" + emp.status + "\")' style='flex:1;'>" + (emp.status === "active" ? "إيقاف" : "تنشيط") + "</button>";
@@ -396,7 +451,6 @@ function fillTargetSelect(employees){
     opt.textContent = emp.id + " - " + emp.name;
     select.appendChild(opt);
   });
-  // استعادة القيمة السابقة إن وجدت
   if(currentValue){
     for(var i = 0; i < select.options.length; i++){
       if(select.options[i].value === currentValue){
@@ -407,6 +461,122 @@ function fillTargetSelect(employees){
   }
 }
 
+// ============ إدخال المبيعات ============
+function onSalesInputChange(input){
+  var empId = input.getAttribute("data-empid");
+  var value = input.value.trim();
+  var originalEmp = currentEmployees.find(function(e){return e.id === empId});
+  
+  if(!originalEmp) return;
+  
+  var originalValue = originalEmp.hasDaySales ? String(originalEmp.sales) : "";
+  
+  // تحديث حالة الحقل
+  if(value !== originalValue){
+    input.classList.add("dirty");
+    input.classList.remove("saved");
+    dirtySales[empId] = value;
+    
+    // تفعيل زر الحفظ الخاص
+    var saveBtn = document.querySelector('[data-savebtn="' + empId + '"]');
+    if(saveBtn) saveBtn.disabled = false;
+  } else {
+    input.classList.remove("dirty");
+    input.classList.remove("saved");
+    delete dirtySales[empId];
+    
+    var saveBtn = document.querySelector('[data-savebtn="' + empId + '"]');
+    if(saveBtn) saveBtn.disabled = true;
+  }
+  
+  // إظهار/إخفاء زر "حفظ الكل"
+  updateSaveAllButton();
+}
+
+function updateSaveAllButton(){
+  var hasDirty = Object.keys(dirtySales).length > 0;
+  $("saveAllBtn").style.display = hasDirty ? "inline-flex" : "none";
+  if(hasDirty){
+    $("saveAllBtn").textContent = "💾 حفظ الكل (" + Object.keys(dirtySales).length + ")";
+  }
+}
+
+function saveSingleSales(empId){
+  if(!(empId in dirtySales)) return;
+  
+  var dateVal = $("filterDate").value;
+  var salesArray = [{empId: empId, amount: dirtySales[empId]}];
+  
+  var saveBtn = document.querySelector('[data-savebtn="' + empId + '"]');
+  if(saveBtn){saveBtn.disabled = true; saveBtn.textContent = "⏳";}
+  
+  apiAdminCall("bulkSaveSales", {
+    date: dateVal,
+    salesJSON: JSON.stringify(salesArray)
+  }).then(function(res){
+    if(res.success){
+      showToast("✅ " + res.message);
+      delete dirtySales[empId];
+      
+      // تحديث حقل الإدخال
+      var input = document.querySelector('input[data-empid="' + empId + '"]');
+      if(input){
+        input.classList.remove("dirty");
+        input.classList.add("saved");
+        setTimeout(function(){input.classList.remove("saved");}, 2000);
+      }
+      
+      // إعادة تحميل البيانات (لتحديث إجمالي الشهر والإنجاز)
+      setTimeout(loadEmployees, 500);
+    } else {
+      showToast(res.error || "فشل الحفظ", true);
+      if(saveBtn){saveBtn.disabled = false; saveBtn.textContent = "💾";}
+    }
+  }).catch(function(err){
+    console.error(err);
+    showToast("فشل الاتصال بالسيرفر", true);
+    if(saveBtn){saveBtn.disabled = false; saveBtn.textContent = "💾";}
+  });
+}
+
+function saveAllDirty(){
+  if(Object.keys(dirtySales).length === 0){
+    showToast("لا توجد تغييرات للحفظ", false, true);
+    return;
+  }
+  
+  var dateVal = $("filterDate").value;
+  var salesArray = [];
+  for(var empId in dirtySales){
+    salesArray.push({empId: empId, amount: dirtySales[empId]});
+  }
+  
+  var btn = $("saveAllBtn");
+  btn.disabled = true;
+  btn.textContent = "⏳ جاري الحفظ...";
+  
+  apiAdminCall("bulkSaveSales", {
+    date: dateVal,
+    salesJSON: JSON.stringify(salesArray)
+  }).then(function(res){
+    if(res.success){
+      showToast("✅ " + res.message);
+      dirtySales = {};
+      setTimeout(loadEmployees, 500);
+    } else {
+      showToast(res.error || "فشل الحفظ", true);
+      btn.disabled = false;
+      updateSaveAllButton();
+    }
+  }).catch(function(err){
+    console.error(err);
+    showToast("فشل الاتصال بالسيرفر", true);
+    btn.disabled = false;
+    updateSaveAllButton();
+  });
+}
+
+// ============ إدارة الموظفين ============
 function addNewEmployee(){
   var id = $("newEmpId").value.trim();
   var name = $("newEmpName").value.trim();
@@ -447,7 +617,6 @@ function toggleStatus(id, currentStatus){
   
   if(!confirm("هل تريد " + action + " هذا الموظف؟")) return;
   
-  // نحتاج اسم الموظف — نبحث عنه في currentEmployees
   var emp = currentEmployees.find(function(e){return e.id === id});
   var empName = emp ? emp.name : "";
   
@@ -515,14 +684,6 @@ function saveTarget(){
     btn.innerHTML = originalHTML;
   });
 }
-
-// على الجوال: منع التكبير عند الكتابة
-document.addEventListener('DOMContentLoaded', function(){
-  var metaViewport = document.querySelector('meta[name="viewport"]');
-  if(metaViewport){
-    metaViewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
-  }
-});
 </script>
 </body>
 </html>
