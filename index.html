@@ -273,8 +273,8 @@ salesChart=new Chart(ctx,{type:"doughnut",data:{labels:["المحقق","المت
 }
 function renderDayData(dayData){
 if(!dayData){showDayEmpty("لا توجد بيانات لهذا اليوم");return}
-if(dayData.isOffDay){showDayContent();$("rowTarget").style.display="none";$("rowSales").style.display="none";$("rowRemaining").style.display="none";$("rowStatus").className="data-row off-day";$("valStatus").textContent="🏖️ يوم عطلة";$("valStatus").className="status-badge off-day";$("salesInputSection").style.display="none";return}
-showDayContent();$("rowTarget").style.display="flex";$("rowSales").style.display="flex";$("rowRemaining").style.display="flex";$("salesInputSection").style.display="block";
+if(dayData.isOffDay){showDayContent();$("rowTarget").style.display="none";$("rowSales").style.display="none";$("rowRemaining").style.display="none";$("rowStatus").className="data-row off-day";$("valStatus").textContent="🏖️ يوم عطلة";$("valStatus").className="status-badge off-day";return}
+showDayContent();$("rowTarget").style.display="flex";$("rowSales").style.display="flex";$("rowRemaining").style.display="flex";
 $("valTarget").textContent=formatNumber(dayData.actualTarget)+" ريال";
 $("valSales").textContent=dayData.hasData?formatNumber(dayData.sales)+" ريال":"لم تُدخل بعد";
 $("valSales").style.color=dayData.hasData?"var(--gray-900)":"var(--gray-500)";
