@@ -391,7 +391,7 @@ function renderEmployees(employees){
   }
   $("employeesTableBody").innerHTML = tableHtml;
   
-  // ============ البطاقات (جوال) ============
+   // ============ البطاقات (جوال) ============
   var cardsHtml = "";
   
   if(employees.length === 0){
@@ -402,34 +402,54 @@ function renderEmployees(employees){
       var badgeText = emp.status === "active" ? "نشط" : "موقوف";
       var percentColor = emp.percentage >= 100 ? "success" : (emp.percentage >= 50 ? "mid" : "low");
       var percentWidth = Math.min(100, emp.percentage);
-      var salesValue = emp.hasDaySales ? emp.sales : "";
+      
+      // القيمة الحالية لمبيعات اليوم
+      var daySalesValue = emp.hasDaySales ? emp.daySales : null;
+      var inputValue = emp.hasDaySales ? emp.daySales : "";
+      var inputPlaceholder = "—";
       
       cardsHtml += '<div class="emp-card">';
+      
+      // رأس البطاقة
       cardsHtml += '<div class="emp-card-header">';
       cardsHtml += '<div><div class="emp-card-name">' + emp.name + '</div><div class="emp-card-id">' + emp.id + '</div></div>';
       cardsHtml += '<span class="badge ' + badgeClass + '">' + badgeText + '</span>';
       cardsHtml += '</div>';
       
+      // إحصائيات الشهر
       cardsHtml += '<div class="emp-card-stats">';
       cardsHtml += '<div class="emp-card-stat"><div class="lbl">إجمالي الشهر</div><div class="val">' + formatNumber(emp.monthSales) + '</div></div>';
       cardsHtml += '<div class="emp-card-stat"><div class="lbl">الهدف الشهري</div><div class="val">' + (emp.monthlyTarget > 0 ? formatNumber(emp.monthlyTarget) : '—') + '</div></div>';
       cardsHtml += '</div>';
       
+      // شريط الإنجاز
       if(emp.monthlyTarget > 0){
         cardsHtml += '<div style="font-size:11px;color:var(--gray-500);font-weight:700;margin-bottom:6px;">الإنجاز: ' + emp.percentage + '%</div>';
         cardsHtml += '<div class="progress-bar" style="width:100%;margin-bottom:12px;"><div class="progress-fill ' + percentColor + '" style="width:' + percentWidth + '%"></div></div>';
       }
       
-      cardsHtml += '<div style="font-size:11px;color:var(--gray-500);font-weight:700;margin-bottom:6px;">مبيعات اليوم:</div>';
+      // ============ قسم مبيعات اليوم ============
+      cardsHtml += '<div style="background:#fff;border-radius:10px;padding:12px;margin-bottom:12px;border:2px solid var(--gray-200);">';
+      
+      // عرض القيمة الحالية + حقل الإدخال
+      cardsHtml += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">';
+      cardsHtml += '<span style="font-size:11px;color:var(--gray-500);font-weight:700;">مبيعات اليوم:</span>';
+      cardsHtml += '<span style="font-size:16px;font-weight:800;color:' + (daySalesValue !== null ? 'var(--gray-900)' : 'var(--gray-300)') + ';">' + (daySalesValue !== null ? formatNumber(daySalesValue) + ' ريال' : '—') + '</span>';
+      cardsHtml += '</div>';
+      
+      // حقل الإدخال + زر الحفظ
       cardsHtml += '<div class="emp-card-sales-input">';
       cardsHtml += '<input type="number" min="0" step="0.01" inputmode="decimal" ';
       cardsHtml += 'data-empid="' + emp.id + '" ';
-      cardsHtml += 'value="' + (salesValue === 0 && !emp.hasDaySales ? "" : salesValue) + '" ';
-      cardsHtml += 'placeholder="—" ';
+      cardsHtml += 'value="' + inputValue + '" ';
+      cardsHtml += 'placeholder="' + inputPlaceholder + '" ';
       cardsHtml += 'oninput="onSalesInputChange(this)">';
       cardsHtml += '<button data-savebtn="' + emp.id + '" onclick="saveSingleSales(\'' + emp.id + '\')" disabled>💾</button>';
       cardsHtml += '</div>';
       
+      cardsHtml += '</div>';
+      
+      // أزرار الإجراءات
       cardsHtml += '<div class="emp-card-actions">';
       cardsHtml += "<button class='btn btn-sm " + (emp.status === "active" ? "btn-danger" : "btn-success") + "' onclick='toggleStatus(\"" + emp.id + "\",\"" + emp.status + "\")' style='flex:1;'>" + (emp.status === "active" ? "إيقاف" : "تنشيط") + "</button>";
       cardsHtml += "<button class='btn btn-sm' onclick='resetPassword(\"" + emp.id + "\",\"" + emp.name + "\")' style='flex:1;'>🔑 كلمة المرور</button>";
